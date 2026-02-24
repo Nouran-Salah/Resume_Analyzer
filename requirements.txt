@@ -1,0 +1,14 @@
+pydantic>=2.7
+langgraph>=0.2
+langchain-core>=0.2
+langchain-openai>=0.1
+langchain-community>=0.2
+tavily-python>=0.5
+ipython>=8.0
+numpy>=1.26
+gqlalchemy>=1.6
+openai>=1.30
+pypdf
+chromadb
+plotly
+langchain_ollama
