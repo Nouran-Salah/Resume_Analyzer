@@ -161,8 +161,8 @@ You are an expert Resume Analyzer and Job Matcher.
 
     Tasks:
     - Calculate match score (0–100)
-    - List matching skills
-    - List missing skills
+    - List matching skills in both cv and job description
+    - List missing skills required in Job description but missing in CV
     - Highlight seniority mismatch
     - Provide final recommendation
 
