@@ -12,3 +12,4 @@ pypdf
 chromadb
 plotly
 langchain_ollama
+st_circular_progress 
