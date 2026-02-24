@@ -1,15 +1,19 @@
 # app.py
 import streamlit as st
 from pathlib import Path
-from Resume_analyzer import get_Analysis  # make sure your function is accessible
+from Resume2 import get_Analysis 
 import plotly.graph_objects as go
 import streamlit as st
 from st_circular_progress import CircularProgress
 import time
-# Add percentage in center
+from langchain_openai import OpenAIEmbeddings
 
-# from pyngrok import ngrok
-
+api_key = st.secrets["OPENAI_API_KEY"]
+# llm.openai_api_key=api_key
+# embeddings = OpenAIEmbeddings(
+#     model="text-embedding-3-small",
+#     api_key=api_key
+# )
 # ---- Ngrok tunnel ----
 # ngrok.set_auth_token("3A3fScLsWJY8clWsAuMBsjv6kpi_7wrpg5g41QNrbRXCMsMgs")
 # public_url = ngrok.connect(addr=8501)
@@ -89,7 +93,7 @@ if st.button("Analyze"):
             try:
             #======= First Row =======#
                 score_col1, score_col2, score_col3 = st.columns([1,2,1])
-                result = get_Analysis(temp_cv_path, job_description)
+                result = get_Analysis(temp_cv_path, job_description,api_key)
                 color=''
                 if result.match_score >= 75:
                     color = 'green' 
@@ -141,7 +145,7 @@ if st.button("Analyze"):
                     ">
                     <h4 style="margin-bottom:10px;">⚠️ Missing Skills</h4>
                     """, unsafe_allow_html=True)
-                    st.html(display_skills_inline(result.matching_skills, "#a30016"))
+                    st.html(display_skills_inline(result.missing_skills, "#a30016"))
                     st.markdown("</div>", unsafe_allow_html=True)
 
 
