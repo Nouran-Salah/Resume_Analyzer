@@ -30,29 +30,7 @@ job_description = st.text_area(
     "Enter Job Description",
     placeholder="Paste the job description here..."
 )
-job_description="""🚀 We’re Hiring: Junior / Early-Career AI Engineer (0–3 Years Experience)
-Are you passionate about building real-world AI systems?
- We’re looking for a motivated Junior AI Engineer to join our team and contribute to the development, evaluation, and deployment of AI models in production environments.
 
-🔹 What You’ll Do:
-Develop, train, and evaluate ML & LLM models
-Prepare and preprocess datasets for training and validation
-Implement reproducible experimentation workflows
-Integrate AI models into backend services and inference pipelines
-Support model performance optimization and monitoring
-Collaborate with software, platform, and QA teams
-Document experiments and technical findings clearly
-
-🔹 What We’re Looking For:
-Bachelor’s or Master’s in Computer Science, Engineering, or a related field
-0–3 years of hands-on ML/AI experience
-Strong Python programming skills
-Experience with PyTorch, TensorFlow, or similar frameworks
-Solid understanding of ML fundamentals (training, validation, metrics)
-Familiarity with Git and software engineering best practices
-Exposure to LLMs, embeddings, generative AI, fine-tuning, and benchmarking
-Experience with APIs, Docker, or cloud environments is a plus
-Familiarity with digital design, verification, and the software development lifecycle is a plus"""
 
 def display_skills_inline(skills, color="#4CAF50"):
     skills_html = '<div style="display:flex;flex-wrap:wrap;gap:8px;">'
