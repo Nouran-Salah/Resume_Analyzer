@@ -1,10 +1,5 @@
 # %%
-from langchain_ollama import ChatOllama
-
-llm = ChatOllama(
-    model="minimax-m2.5:cloud", 
-    temperature=0,
-)
+from langchain_openai import ChatOpenAI
 
 # %%
 from langchain_core.messages import HumanMessage
@@ -77,12 +72,15 @@ def load_Data_and_create_Chunks(data:dict):
 
 
 # %%
-from langchain_ollama import OllamaEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 import json
-def create_vectorDB(chunks):
+def create_vectorDB(chunks,api_key):
 
-    embeddings = OllamaEmbeddings(model="nomic-embed-text")
+    embeddings = OpenAIEmbeddings(
+        model="text-embedding-3-small",
+        api_key=api_key
+                )
 
     all_texts = []
     all_metadatas = []
@@ -113,17 +111,22 @@ def create_vectorDB(chunks):
 
     return vectorDB
 
-def get_Analysis(cv,job_description):
+def get_Analysis(cv,job_description,api_key):
    
     data = createDataDict()
     print("Got out of create Data Dict: ", data)
     chunks = load_Data_and_create_Chunks(data)
     print("Got out of load_Data_and_create_Chunks: ", chunks)
 
-    vectorDB = create_vectorDB(chunks)
+    vectorDB = create_vectorDB(chunks,api_key)
     retriever = vectorDB.as_retriever(
         search_type="similarity",
         search_kwargs={"k": 5}
+    )
+    llm = ChatOpenAI(
+    model="gpt-4.1-mini",
+    temperature=0,
+    api_key=api_key
     )
 
     cv_query=load_query_pdf(cv)
@@ -164,7 +167,7 @@ You are an expert Resume Analyzer and Job Matcher.
     - Provide final recommendation
 
     Output MUST be structured.
-    Return the output as a **valid JSON** matching this format:
+"Return the output as **valid JSON only**, no markdown, no extra text."
     {{
         "match_score": 0,
         "matching_skills": [],
@@ -174,7 +177,9 @@ You are an expert Resume Analyzer and Job Matcher.
     }}
     """
     response = llm.invoke([HumanMessage(content=prompt)])
+    print(response)
     analysis_dict = json.loads(response.content)
+    print(analysis_dict)
     analysis = Output(**analysis_dict) 
     return analysis
 
@@ -238,11 +243,10 @@ You are an expert Resume Analyzer and Job Matcher.
 # Performance improvements and UI enhancements.
 # """
 # result=get_Analysis(testCV,job_description)
-# print(result.match_score)       
-# print(result.matching_skills)
-# print(result.missing_skills)
-# print(result.seniority_mismatch)
-# print(result.recommendation)
+# print(result)
 
+
+# %%
+# print(type(result.matching_skills))
 
 
