@@ -150,32 +150,28 @@ def get_Analysis(cv,job_description,api_key):
     prompt = f"""
 You are an expert Resume Analyzer and Job Matcher.
 
-    Candidate CV:
-    {cv_query}
+### Candidate CV (do NOT confuse with the job description):
+{cv_query}
 
-    Job Description:
-    {job_description}
+### Job Description (requirements for the role):
+{job_description}
 
-    Retrieved context:
-    {context}
+Using ONLY the above CV and Job Description:
+- List skills present in both as "matching_skills"
+- List skills required by the job but missing in the CV as "missing_skills"
+- Highlight any seniority mismatch
+- Provide a final recommendation
 
-    Tasks:
-    - Calculate match score (0–100)
-    - List matching skills in both cv and job description
-    - List missing skills required in Job description but missing in CV
-    - Highlight seniority mismatch
-    - Provide final recommendation
+Return a **valid JSON ONLY**, no markdown or extra text:
 
-    Output MUST be structured.
-"Return the output as **valid JSON only**, no markdown, no extra text."
-    {{
-        "match_score": 0,
-        "matching_skills": [],
-        "missing_skills": [],
-        "seniority_mismatch": "",
-        "recommendation": ""
-    }}
-    """
+{{
+"match_score": 0,
+"matching_skills": [],
+"missing_skills": [],
+"seniority_mismatch": "",
+"recommendation": ""
+}}
+"""
     response = llm.invoke([HumanMessage(content=prompt)])
     print(response)
     analysis_dict = json.loads(response.content)
